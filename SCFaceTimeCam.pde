@@ -51,13 +51,13 @@ void draw() {
   for (int i = 0; i < bufferSize; i++) {
     int pixelValue = video.pixels[i];
     float pixelBrightness = brightness(pixelValue);
-    // scale value between -1 and 1 for Audio playback
+    // scale brightness value between -1 and 1 for Audio playback
      buffer[i] = pixelBrightness/127.5 - 1;
   }
   updatePixels();
   
   
- // send scaled pixelbrightness buffer to SC
+ // send scaled pixel brightness buffer to SC
   OscMessage msgPixelBuf = new OscMessage("/webcam");
   msgPixelBuf.add(buffer);
   osc.send(msgPixelBuf, supercollider);
