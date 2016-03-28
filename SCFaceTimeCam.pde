@@ -18,11 +18,13 @@ OscP5 osc;
 NetAddress supercollider;
 float buffer[];
 int bufferSize;
+int fps;
 
 void setup() {
 //  println(Capture.list());
   size(1280, 720);
-  video = new Capture(this, 1280, 720, 30);
+  fps = 30;
+  video = new Capture(this, 1280, 720, fps);
   video.start();
   
   // buffer to send to SC:
@@ -30,6 +32,9 @@ void setup() {
   buffer = new float[bufferSize];
   osc = new OscP5(this, 12000);
   supercollider = new NetAddress("127.0.0.1", 57120);
+  
+  // set draw() frame rate to video frame rate
+  frameRate(fps);
 }
 
 
@@ -56,5 +61,5 @@ void draw() {
   OscMessage msgPixelBuf = new OscMessage("/webcam");
   msgPixelBuf.add(buffer);
   osc.send(msgPixelBuf, supercollider);
-  
+ 
 }
